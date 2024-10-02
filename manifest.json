@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Copy Tab URLs",
-  "version": "1.0",
+  "version": "1.31",
   "permissions": [
     "tabs",
+    "scripting",
+    "activeTab",
     "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html",
