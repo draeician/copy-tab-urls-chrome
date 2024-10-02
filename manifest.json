@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Copy Tab URLs",
-  "version": "1.47",
+  "version": "1.48",
   "permissions": [
     "tabs",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"

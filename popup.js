@@ -2,9 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const copyButton = document.getElementById('copyButton');
   const messageDiv = document.getElementById('message');
   const statsDiv = document.getElementById('stats');
+  const allTabsToggle = document.getElementById('allTabsToggle');
+
+  // Load saved state
+  chrome.storage.sync.get('copyAllTabs', (data) => {
+    allTabsToggle.checked = data.copyAllTabs !== false;
+  });
+
+  allTabsToggle.addEventListener('change', (e) => {
+    chrome.storage.sync.set({ copyAllTabs: e.target.checked });
+  });
 
   copyButton.addEventListener('click', () => {
-    chrome.runtime.sendMessage({ action: "copyUrls" });
+    chrome.storage.sync.get('copyAllTabs', (data) => {
+      chrome.runtime.sendMessage({ 
+        action: "copyUrls", 
+        copyAllTabs: data.copyAllTabs !== false 
+      });
+    });
     copyButton.disabled = true;
     copyButton.textContent = 'Copying...';
     messageDiv.textContent = 'Initializing...';

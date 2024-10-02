@@ -2,14 +2,22 @@ chrome.action.onClicked.addListener(copyUrls);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "copyUrls") {
-    copyUrls();
+    copyUrls(request.copyAllTabs);
   }
 });
 
-async function copyUrls() {
+async function copyUrls(copyAllTabs = true) {
   try {
     chrome.runtime.sendMessage({ action: "updateStatus", message: "Querying tabs..." });
-    const tabs = await chrome.tabs.query({});
+    
+    let tabs;
+    if (copyAllTabs) {
+      tabs = await chrome.tabs.query({});
+    } else {
+      const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      tabs = await chrome.tabs.query({ windowId: currentTab.windowId });
+    }
+    
     const urls = tabs.map(tab => tab.url);
     
     chrome.runtime.sendMessage({ 
