@@ -1,31 +1,39 @@
-chrome.browserAction.onClicked.addListener(() => {
-  chrome.tabs.query({}, (tabs) => {
-    if (chrome.runtime.lastError) {
-      console.error(chrome.runtime.lastError);
-      alert('Failed to query tabs.');
-      return;
-    }
+chrome.action.onClicked.addListener(async () => {
+  try {
+    const tabs = await chrome.tabs.query({});
     const urls = tabs.map(tab => tab.url).join('\n');
-    copyToClipboard(urls);
-  });
+    await copyToClipboard(urls);
+    chrome.runtime.sendMessage({ action: "showMessage", message: "URLs copied to clipboard!" });
+  } catch (err) {
+    console.error('Error:', err);
+    chrome.runtime.sendMessage({ action: "showMessage", message: "Failed to copy URLs." });
+  }
 });
 
-function copyToClipboard(text) {
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  document.body.appendChild(textarea);
-  textarea.select();
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "copyUrls") {
+    chrome.runtime.sendMessage({ action: "showMessage", message: "Copying URLs..." });
+    copyUrls();
+  }
+});
+
+async function copyToClipboard(text) {
   try {
-    const successful = document.execCommand('copy');
-    if (successful) {
-      alert('URLs copied to clipboard!');
-    } else {
-      console.error('Failed to copy text.');
-      alert('Failed to copy URLs to clipboard.');
-    }
+    await navigator.clipboard.writeText(text);
   } catch (err) {
     console.error('Error copying to clipboard: ', err);
-    alert('Error copying to clipboard.');
+    throw err;
   }
-  document.body.removeChild(textarea);
+}
+
+async function copyUrls() {
+  try {
+    const tabs = await chrome.tabs.query({});
+    const urls = tabs.map(tab => tab.url).join('\n');
+    await copyToClipboard(urls);
+    chrome.runtime.sendMessage({ action: "showMessage", message: "URLs copied to clipboard!" });
+  } catch (err) {
+    console.error('Error:', err);
+    chrome.runtime.sendMessage({ action: "showMessage", message: "Failed to copy URLs." });
+  }
 }
