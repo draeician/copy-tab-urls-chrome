@@ -17,39 +17,21 @@ async function copyUrls() {
       message: `Copying ${urls.length} URLs...` 
     });
     
-    const activeTab = tabs.find(tab => tab.active);
-    if (!activeTab) {
-      throw new Error('No active tab found');
+    const nonChromeUrls = urls.filter(url => !url.startsWith('chrome://'));
+    
+    if (nonChromeUrls.length === 0) {
+      throw new Error('No non-chrome:// URLs found to copy');
     }
     
-    console.log('Active tab URL:', activeTab.url);
-    
-    if (activeTab.url.startsWith('chrome://')) {
-      console.log('Chrome URL detected, using alternative method');
-      await chrome.tabs.create({ url: 'popup.html', active: false }, async (tab) => {
-        await chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          function: copyToClipboard,
-          args: [urls.join('\n')]
-        });
-        await chrome.tabs.remove(tab.id);
-      });
-    } else {
-      console.log('Executing content script');
-      await chrome.scripting.executeScript({
-        target: { tabId: activeTab.id },
-        function: copyToClipboard,
-        args: [urls.join('\n')]
-      });
-    }
+    const text = nonChromeUrls.join('\n');
     
     chrome.runtime.sendMessage({ 
-      action: "copyComplete", 
-      message: `${urls.length} URLs copied to clipboard!`,
+      action: "copyText", 
+      text: text,
       stats: {
         tabCount: tabs.length,
-        urlCount: urls.length,
-        characterCount: urls.join('\n').length
+        urlCount: nonChromeUrls.length,
+        characterCount: text.length
       }
     });
   } catch (err) {
@@ -62,18 +44,16 @@ async function copyUrls() {
 }
 
 function copyToClipboard(text) {
-  return new Promise((resolve, reject) => {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      document.execCommand('copy');
-      resolve();
-    } catch (err) {
-      reject(err);
-    } finally {
-      document.body.removeChild(textArea);
-    }
-  });
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+  let success = false;
+  try {
+    success = document.execCommand('copy');
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+  document.body.removeChild(textArea);
+  return success;
 }
