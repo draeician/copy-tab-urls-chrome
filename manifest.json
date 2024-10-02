@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "Copy Tab URLs",
+  "version": "1.0",
+  "permissions": [
+    "tabs",
+    "clipboardWrite"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
+}
+
