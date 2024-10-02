@@ -26,7 +26,7 @@ async function copyUrls() {
     const text = nonChromeUrls.join('\n');
     
     chrome.runtime.sendMessage({ 
-      action: "copyText", 
+      action: "copyComplete", 
       text: text,
       stats: {
         tabCount: tabs.length,

@@ -17,14 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.textContent = request.message;
         break;
       case "copyComplete":
-        messageDiv.textContent = request.message;
-        statsDiv.innerHTML = `
-          <p>Tabs processed: ${request.stats.tabCount}</p>
-          <p>URLs copied: ${request.stats.urlCount}</p>
-          <p>Total characters: ${request.stats.characterCount}</p>
-        `;
-        copyButton.disabled = false;
-        copyButton.textContent = 'Copy URLs to Clipboard';
+        navigator.clipboard.writeText(request.text).then(() => {
+          messageDiv.textContent = `${request.stats.urlCount} URLs copied to clipboard!`;
+          statsDiv.innerHTML = `
+            <p>Tabs processed: ${request.stats.tabCount}</p>
+            <p>URLs copied: ${request.stats.urlCount}</p>
+            <p>Total characters: ${request.stats.characterCount}</p>
+          `;
+          copyButton.disabled = false;
+          copyButton.textContent = 'Copy URLs to Clipboard';
+        }).catch(err => {
+          messageDiv.textContent = `Failed to copy URLs: ${err.message}`;
+          statsDiv.textContent = '';
+          copyButton.disabled = false;
+          copyButton.textContent = 'Try Again';
+        });
         break;
       case "copyError":
         messageDiv.textContent = request.message;
