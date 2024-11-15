@@ -6,9 +6,10 @@ The Copy Tab URLs Chrome Extension is a simple and efficient tool that allows us
 
 ## Features
 
-- One-click functionality to copy all open tab URLs
+- One-click functionality to copy open tab URLs
+- Option to copy URLs from all windows or just the current window
 - Automatically formats URLs, separating each with a new line
-- Provides user feedback through alert messages
+- Provides user feedback and statistics through the popup interface
 - Lightweight and easy to use
 
 ## Installation
@@ -21,14 +22,17 @@ The Copy Tab URLs Chrome Extension is a simple and efficient tool that allows us
 ## Usage
 
 1. Click on the extension icon in your Chrome toolbar.
-2. The URLs of all open tabs will be copied to your clipboard automatically.
-3. An alert will confirm that the URLs have been copied successfully.
+2. Select whether you want to copy URLs from all windows or just the current window.
+3. Click the "Copy URLs" button.
+4. The URLs of the selected tabs will be copied to your clipboard.
+5. An alert will confirm that the URLs have been copied successfully, along with the number of URLs copied.
 
 ## File Structure
 
 - `manifest.json`: Contains extension metadata and permissions
 - `background.js`: Handles the core functionality of copying URLs
-- `popup.html`: Provides a simple user interface (currently unused)
+- `popup.html`: Provides the user interface for selecting copy options
+- `popup.js`: Manages the popup functionality and user interactions
 - `icons/`: Directory containing extension icons
 
 ## Permissions
