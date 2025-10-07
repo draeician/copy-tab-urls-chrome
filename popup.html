@@ -1,23 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Copy Tab URLs</title>
   <style>
-    body { font-family: Arial, sans-serif; width: 300px; padding: 10px; }
-    button { margin-top: 10px; }
-    #message { margin-top: 10px; font-weight: bold; }
-    #stats { margin-top: 10px; font-size: 0.9em; }
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      width: 320px;
+      padding: 12px;
+      margin: 0;
+      background-color: var(--popup-background, #ffffff);
+      color: var(--popup-text, #1a1a1a);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    button {
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #888;
+      border-radius: 4px;
+      background-color: #f3f3f3;
+    }
+    button.primary {
+      background-color: #1976d2;
+      border-color: #1976d2;
+      color: #ffffff;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    #message.error {
+      color: #c62828;
+    }
+    #stats {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    #stats p {
+      margin: 2px 0;
+    }
   </style>
 </head>
 <body>
   <h1>Copy Tab URLs</h1>
-  <label>
-    <input type="checkbox" id="allTabsToggle"> Copy from all windows
-  </label>
-  <button id="copyButton">Copy URLs to Clipboard</button>
-  <div id="message"></div>
-  <div id="stats"></div>
+  <div class="controls">
+    <label class="checkbox">
+      <input type="checkbox" id="allTabsToggle">
+      <span>Copy from all windows</span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" id="openInNewWindowToggle" checked>
+      <span>Open in new window</span>
+    </label>
+  </div>
+  <button id="copyButton" class="primary">Copy URLs to Clipboard</button>
+  <button id="restoreButton">Restore Last Saved (new window)</button>
+  <button id="clipboardButton">Open URLs from Clipboard (this window)</button>
+  <div id="message" role="status" aria-live="polite"></div>
+  <div id="stats" aria-live="polite"></div>
+  <script src="vendor/browser-adapter.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
-
