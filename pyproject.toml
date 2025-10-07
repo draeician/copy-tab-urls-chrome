@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discripper"
+version = "0.0.0"
+description = "Internal tooling package for repository gates."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Copy Tab URLs Maintainers"}]
+license = {text = "MIT"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

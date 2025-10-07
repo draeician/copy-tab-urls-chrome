@@ -1,7 +1,7 @@
 # TASKS
 
 ## Phase 1 – Cross-browser foundation
-- [ ] Add the WebExtensions browser adapter and ensure it loads in the service worker and popup (adapter active in both contexts). [#P1-T1]
+- [x] Add the WebExtensions browser adapter and ensure it loads in the service worker and popup (adapter active in both contexts). [#P1-T1]
 - [ ] Update Manifest V3 metadata, permissions, and Firefox-specific settings (manifest validates in Chrome & Firefox). [#P1-T2]
 
 ## Phase 2 – Background capabilities

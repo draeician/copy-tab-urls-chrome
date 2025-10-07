@@ -1,4 +1,8 @@
-const browserApi = typeof browser !== 'undefined' ? browser : chrome;
+if (typeof browser === 'undefined') {
+  throw new Error('Browser adapter failed to initialize in popup context.');
+}
+
+const browserApi = browser;
 
 const COPY_BUTTON_DEFAULT = 'Copy URLs to Clipboard';
 const COPY_BUTTON_WORKING = 'Copying…';
