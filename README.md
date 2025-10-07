@@ -1,50 +1,56 @@
-# Copy Tab URLs Chrome Extension
+# Copy Tab URLs Browser Extension
 
 ## Overview
 
-The Copy Tab URLs Chrome Extension is a simple and efficient tool that allows users to quickly copy the URLs of all open tabs in their Chrome browser. This extension streamlines the process of sharing or saving multiple webpage addresses at once.
+Copy Tab URLs is a lightweight, offline-ready WebExtensions add-on that helps you collect, copy, and reopen the URLs from your current browsing session. The extension now supports Chromium-based browsers (Chrome, Brave, Edge) and Firefox with the same MV3 codebase.
 
 ## Features
 
-- One-click functionality to copy open tab URLs
-- Option to copy URLs from all windows or just the current window
-- Automatically formats URLs, separating each with a new line
-- Provides user feedback and statistics through the popup interface
-- Lightweight and easy to use
+- Copy the URLs from the current window or every open browser window.
+- Automatically filters out internal pages such as `chrome://` and `about:`.
+- Displays real-time status updates and copy statistics in the popup.
+- Saves the most recent copy session so you can restore those tabs later.
+- Opens URL lists from your clipboard (newline-separated or JSON array/object).
+- Remembers your preferences with `storage.sync` and keeps the last session in `storage.local`.
+- Requires no network access and works completely offline.
 
 ## Installation
 
-1. Download or clone this repository to your local machine.
-2. Open Google Chrome and navigate to `chrome://extensions/`.
-3. Enable "Developer mode" in the top right corner.
-4. Click "Load unpacked" and select the directory containing the extension files.
+### Chrome / Brave (Chromium)
+1. Clone or download this repository to your machine.
+2. Open `chrome://extensions/` (or `brave://extensions/`).
+3. Enable **Developer mode** in the top-right corner.
+4. Click **Load unpacked** and select the project directory.
+
+### Firefox
+1. Clone or download this repository to your machine.
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on…** and choose the `manifest.json` file in the project directory.
+4. To install a signed package, run your preferred build/signing process and load the resulting `.xpi` through the same page.
 
 ## Usage
 
-1. Click on the extension icon in your Chrome toolbar.
-2. Select whether you want to copy URLs from all windows or just the current window.
-3. Click the "Copy URLs" button.
-4. The URLs of the selected tabs will be copied to your clipboard.
-5. An alert will confirm that the URLs have been copied successfully, along with the number of URLs copied.
+1. Open the popup from the toolbar.
+2. Decide whether to copy from all browser windows and whether restored URLs should open in a new window.
+3. Click **Copy URLs to Clipboard** to capture the list. The popup shows progress and writes the final list to your clipboard.
+4. Use **Restore Last Saved** to reopen the most recently copied URLs, or **Open URLs from Clipboard** to parse a list you already have.
+5. Review the stats panel for counts, character totals, and last saved timestamps.
 
-## File Structure
+### Clipboard Format Support
+- Plain text with one URL per line.
+- JSON arrays (e.g. `["https://example.com", "https://openai.com"]`).
+- JSON objects with a `urls` property (e.g. `{ "urls": ["https://example.com"] }`).
 
-- `manifest.json`: Contains extension metadata and permissions
-- `background.js`: Handles the core functionality of copying URLs
-- `popup.html`: Provides the user interface for selecting copy options
-- `popup.js`: Manages the popup functionality and user interactions
-- `icons/`: Directory containing extension icons
+## QA Checklist
 
-## Permissions
+Perform these manual checks on Linux and Windows using Brave, Chrome, and Firefox:
 
-This extension requires the following permissions:
-
-- `tabs`: To access and read the URLs of open tabs
-- `clipboardWrite`: To copy the URLs to the clipboard
-
-## Contributing
-
-Contributions to improve the extension are welcome. Please feel free to submit pull requests or open issues for any bugs or feature requests.
+- Copy URLs from the current window and all windows.
+- Confirm the clipboard text is updated after copying.
+- Restore the last saved session in both the current window and a new window.
+- Open URLs from the clipboard using newline-separated text.
+- Open URLs from the clipboard using a JSON array or `{ urls: [] }` object.
+- Verify internal URLs such as `chrome://` and `about:` are excluded.
 
 ## License
 
