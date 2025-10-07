@@ -1,9 +1,9 @@
 importScripts('vendor/browser-adapter.js');
 
-const runtime = (typeof browser !== 'undefined' ? browser.runtime : chrome.runtime);
-const storage = (typeof browser !== 'undefined' ? browser.storage : chrome.storage);
-const tabsApi = (typeof browser !== 'undefined' ? browser.tabs : chrome.tabs);
-const windowsApi = (typeof browser !== 'undefined' ? browser.windows : chrome.windows);
+const runtime = browser.runtime;
+const storage = browser.storage;
+const tabsApi = browser.tabs;
+const windowsApi = browser.windows;
 
 const INTERNAL_PROTOCOLS = new Set(['chrome:', 'chrome-extension:', 'moz-extension:', 'about:', 'edge:', 'view-source:']);
 

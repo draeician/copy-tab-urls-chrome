@@ -1,4 +1,4 @@
-const browserApi = typeof browser !== 'undefined' ? browser : chrome;
+const browserApi = browser;
 
 const COPY_BUTTON_DEFAULT = 'Copy URLs to Clipboard';
 const COPY_BUTTON_WORKING = 'Copying…';
