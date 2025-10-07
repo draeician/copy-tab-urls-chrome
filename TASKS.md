@@ -2,7 +2,7 @@
 
 ## Phase 1 – Cross-browser foundation
 - [x] Add the WebExtensions browser adapter and ensure it loads in the service worker and popup (adapter active in both contexts). [#P1-T1]
-- [ ] Update Manifest V3 metadata, permissions, and Firefox-specific settings (manifest validates in Chrome & Firefox). [#P1-T2]
+- [x] Update Manifest V3 metadata, permissions, and Firefox-specific settings (manifest validates in Chrome & Firefox). [#P1-T2]
 
 ## Phase 2 – Background capabilities
 - [ ] Refactor the background service worker to use the shared adapter and maintain existing copy/status flow (copy action mirrors current UX). [#P2-T1]

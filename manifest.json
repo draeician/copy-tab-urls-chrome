@@ -1,17 +1,22 @@
 {
   "manifest_version": 3,
   "name": "Copy Tab URLs",
+  "short_name": "Copy URLs",
   "version": "1.50",
   "description": "Copy, restore, and reopen tab URLs across Chrome, Brave, and Firefox.",
+  "author": "Copy Tab URLs Maintainers",
+  "homepage_url": "https://github.com/discripper/copy-tab-urls",
   "permissions": [
     "tabs",
     "storage",
-    "clipboardWrite"
+    "clipboardWrite",
+    "clipboardRead"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "action": {
+    "default_title": "Copy Tab URLs",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -29,7 +34,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "copy-tab-urls@example.com",
+      "id": "copy-tab-urls@discripper.dev",
       "strict_min_version": "109.0"
     }
   }
