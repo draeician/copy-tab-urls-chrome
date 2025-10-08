@@ -26,3 +26,23 @@ def test_browser_adapter_exposes_getter() -> None:
     adapter_source = load_file("vendor/browser-adapter.js")
     assert "browserAdapter" in adapter_source
     assert "getBrowser" in adapter_source
+
+
+def test_background_persists_last_session() -> None:
+    """Copy operations should persist the last session metadata."""
+
+    background_source = load_file("background.js")
+    assert "storage.local.set({" in background_source
+    assert "lastSession" in background_source
+    assert "savedAt" in background_source
+
+
+def test_background_restores_saved_session() -> None:
+    """Restore helpers must reopen URLs via windows/tabs APIs."""
+
+    background_source = load_file("background.js")
+    assert "storage.local.get('lastSession')" in background_source
+    assert "function restoreUrls" in background_source
+    assert "windowsApi.create" in background_source
+    assert "tabsApi.update" in background_source
+    assert "tabsApi.create" in background_source
