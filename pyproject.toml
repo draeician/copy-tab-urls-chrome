@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Copy Tab URLs Maintainers"}]
 license = {text = "MIT"}
+dependencies = ["pytest-cov>=4.1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
