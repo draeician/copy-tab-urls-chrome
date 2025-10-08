@@ -15,7 +15,7 @@
 
 ## Phase 4 – Quality & resilience
 - [x] Add comprehensive error handling for empty results, clipboard failures, and blocked schemes (errors reported without crashes). [#P4-T1]
-- [ ] Verify async flows resolve cleanly with no unhandled promise rejections (console remains clear during manual testing). [#P4-T2]
+- [x] Verify async flows resolve cleanly with no unhandled promise rejections (console remains clear during manual testing). [#P4-T2]
 
 ## Phase 5 – Documentation & release
 - [ ] Update README with multi-browser setup, feature overview, and QA checklist (docs reflect new workflow). [#P5-T1]
