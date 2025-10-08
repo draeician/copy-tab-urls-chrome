@@ -1,0 +1,6 @@
+Can I install this extension in librewolf?
+---
+There isn't an xpi file in teh repo though, so how do we install it?
+---
+Create a bash file to create the xpi file.
+---

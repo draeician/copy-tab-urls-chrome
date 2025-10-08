@@ -1,0 +1,27 @@
+# Copy Tab URLs Chrome Extension Project Summary
+
+## Project Overview
+- Chrome/Firefox browser extension for copying, restoring, and reopening tab URLs
+- Supports both Chromium-based browsers (Chrome, Brave, Edge) and Firefox/LibreWolf
+- Uses Manifest V3 with cross-browser compatibility
+- Offline-ready with no external network access required
+
+## Recent Activities
+- **LibreWolf Compatibility**: Confirmed extension works in LibreWolf (Firefox fork)
+- **Installation Methods**: 
+  - Temporary installation via about:debugging#/runtime/this-firefox
+  - Permanent installation requires disabling signature requirements
+- **Build Scripts Created**: 
+  - `build-xpi.sh`: Comprehensive build script with verification and colored output
+  - `quick-build.sh`: Simple build script for quick XPI creation
+- **XPI File**: Successfully created and tested XPI file (32K) with all required components
+
+## Technical Details
+- Extension uses WebExtensions API with browser adapter for cross-compatibility
+- Includes all necessary files: manifest.json, background.js, popup.html, popup.js, content.js, icons, vendor/browser-adapter.js
+- XPI file is a ZIP archive with .xpi extension containing all extension components
+- Build scripts verify all required files are present before creating XPI
+
+## Installation Instructions for LibreWolf
+1. **Temporary**: Use about:debugging#/runtime/this-firefox → Load Temporary Add-on → Select XPI file
+2. **Permanent**: Disable xpinstall.signatures.required in about:config, then install XPI through add-ons manager
