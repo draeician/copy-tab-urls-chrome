@@ -189,6 +189,9 @@ function renderCopyStats(stats) {
   if (typeof stats.characterCount === 'number') {
     parts.push(`<p>Total characters: ${stats.characterCount}</p>`);
   }
+  if (typeof stats.blockedCount === 'number' && stats.blockedCount > 0) {
+    parts.push(`<p>Blocked internal URLs: ${stats.blockedCount}</p>`);
+  }
   elements.stats.innerHTML = parts.join('');
 }
 
@@ -196,6 +199,9 @@ function renderOperationStats(stats) {
   const parts = [];
   if (typeof stats.openedCount === 'number') {
     parts.push(`<p>URLs opened: ${stats.openedCount}</p>`);
+  }
+  if (typeof stats.blockedCount === 'number' && stats.blockedCount > 0) {
+    parts.push(`<p>Blocked internal URLs: ${stats.blockedCount}</p>`);
   }
   if (stats.source === 'lastSession' && stats.savedAt) {
     try {

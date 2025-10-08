@@ -46,3 +46,10 @@ def test_background_restores_saved_session() -> None:
     assert "windowsApi.create" in background_source
     assert "tabsApi.update" in background_source
     assert "tabsApi.create" in background_source
+
+
+def test_background_reports_blocked_internal_urls() -> None:
+    """Empty results due to blocked schemes should be explained to users."""
+
+    background_source = load_file("background.js")
+    assert "Blocked ${blockedCount} internal URL" in background_source

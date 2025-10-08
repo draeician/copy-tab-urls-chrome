@@ -14,7 +14,7 @@
 - [x] Wire popup logic to new background actions, including settings persistence and clipboard interactions (all buttons trigger expected behavior). [#P3-T2]
 
 ## Phase 4 – Quality & resilience
-- [ ] Add comprehensive error handling for empty results, clipboard failures, and blocked schemes (errors reported without crashes). [#P4-T1]
+- [x] Add comprehensive error handling for empty results, clipboard failures, and blocked schemes (errors reported without crashes). [#P4-T1]
 - [ ] Verify async flows resolve cleanly with no unhandled promise rejections (console remains clear during manual testing). [#P4-T2]
 
 ## Phase 5 – Documentation & release
