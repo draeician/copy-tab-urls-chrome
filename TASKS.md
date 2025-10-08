@@ -19,4 +19,4 @@
 
 ## Phase 5 – Documentation & release
 - [x] Update README with multi-browser setup, feature overview, and QA checklist (docs reflect new workflow). [#P5-T1]
-- [ ] Record the 1.50 release in CHANGELOG and confirm version bump (changelog and manifest show 1.50). [#P5-T2]
+- [x] Record the 1.50 release in CHANGELOG and confirm version bump (changelog and manifest show 1.50). [#P5-T2]

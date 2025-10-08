@@ -6,3 +6,4 @@
 - Added session restore and clipboard import actions with URL validation.
 - Refreshed the popup UI with new controls and status messaging.
 - Updated documentation and permissions, keeping the extension offline-only.
+- Confirmed the manifest version bump to 1.50 across Chrome- and Firefox-targeted builds.
