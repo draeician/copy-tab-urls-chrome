@@ -215,10 +215,12 @@ function parseUrls(input) {
       const parsed = JSON.parse(trimmed);
       if (Array.isArray(parsed)) {
         rawList = parsed;
+      } else if (typeof parsed === 'string') {
+        rawList = splitLines(parsed);
       } else if (parsed && Array.isArray(parsed.urls)) {
         rawList = parsed.urls;
       } else if (parsed && typeof parsed.urls === 'string') {
-        rawList = [parsed.urls];
+        rawList = splitLines(parsed.urls);
       } else {
         rawList = splitLines(trimmed);
       }
@@ -226,7 +228,13 @@ function parseUrls(input) {
       rawList = splitLines(trimmed);
     }
   } else if (typeof input === 'object' && input.urls) {
-    rawList = Array.isArray(input.urls) ? input.urls : [input.urls];
+    if (Array.isArray(input.urls)) {
+      rawList = input.urls;
+    } else if (typeof input.urls === 'string') {
+      rawList = splitLines(input.urls);
+    } else {
+      rawList = splitLines(String(input.urls));
+    }
   }
 
   const validated = [];
