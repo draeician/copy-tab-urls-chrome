@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "copy-tab-urls-chrome"
-version = "1.50"
+version = "1.51"
 description = "Chrome extension for copying, restoring, and reopening tab URLs."
 readme = "README.md"
 requires-python = ">=3.10"

@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset="utf-8" />
+<!-- In MV2, background runs in a window context (no importScripts).
+     Make importScripts a no-op so background.js doesn't crash. -->
+<script>
+  if (typeof importScripts === 'undefined') {
+    window.importScripts = function () {};
+  }
+</script>
+
+<!-- Load the adapter FIRST so background.js can see browserAdapter -->
+<script src="vendor/browser-adapter.js"></script>
+<script src="background.js"></script>
+

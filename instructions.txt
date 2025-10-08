@@ -4,3 +4,16 @@ There isn't an xpi file in teh repo though, so how do we install it?
 ---
 Create a bash file to create the xpi file.
 ---
+xpi file appears to be corrupted, according to librewolf's installation.
+---
+I still get this error in the screen shot.
+@Web
+---
+And now it won't install due to it being corrupted according to librewolf.
+---
+copy-tab-urls-simple.xpi failed to install as it appears to eb corrupted..
+
+According to librewolf.
+---
+It worked.. okay clean up the xpi files that aren't working, remove the build scripts that aren't needed, and update the documentation/instructions for the firefox process. Fyi.. still works in chrome.
+---

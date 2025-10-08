@@ -83,7 +83,4 @@ bower_components
 *.crx
 *.pem
 *.zip
-
-# Ignore
-
 *.xpi

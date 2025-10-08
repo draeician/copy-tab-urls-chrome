@@ -23,11 +23,23 @@ Copy Tab URLs is a lightweight, offline-ready WebExtensions add-on that helps yo
 3. Enable **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and select the project directory.
 
-### Firefox
+**Pre-built XPI:** You can use `copy-tab-urls-chrome.xpi` for Chrome-based browsers if needed.
+
+### Firefox / LibreWolf
 1. Clone or download this repository to your machine.
-2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
-3. Click **Load Temporary Add-on…** and choose the `manifest.json` file in the project directory.
-4. When you are ready to ship, build and sign an `.xpi` using your preferred tooling and install it through the same page.
+2. Build the Firefox-compatible XPI:
+   ```bash
+   ./build-firefox.sh
+   ```
+3. Open Firefox/LibreWolf and navigate to `about:debugging#/runtime/this-firefox`.
+4. Click **Load Temporary Add-on…** and select `copy-tab-urls-firefox.xpi`.
+
+**For permanent installation in LibreWolf:**
+1. Go to `about:config` and set `xpinstall.signatures.required` to `false`.
+2. Go to `about:addons`, click the gear icon, and select "Install Add-on From File...".
+3. Select `copy-tab-urls-firefox.xpi`.
+
+**Note:** Firefox/LibreWolf requires a different manifest format than Chrome (background scripts instead of service worker). The `build-firefox.sh` script creates a Firefox-compatible version automatically.
 
 ## Usage
 

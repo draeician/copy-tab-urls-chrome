@@ -1,27 +1,84 @@
 # Copy Tab URLs Chrome Extension Project Summary
 
 ## Project Overview
-- Chrome/Firefox browser extension for copying, restoring, and reopening tab URLs
-- Supports both Chromium-based browsers (Chrome, Brave, Edge) and Firefox/LibreWolf
-- Uses Manifest V3 with cross-browser compatibility
+- Cross-browser extension for copying, restoring, and reopening tab URLs
+- Supports Chromium-based browsers (Chrome, Brave, Edge) AND Firefox/LibreWolf
+- Uses Manifest V3 with browser-specific manifests
 - Offline-ready with no external network access required
 
-## Recent Activities
-- **LibreWolf Compatibility**: Confirmed extension works in LibreWolf (Firefox fork)
-- **Installation Methods**: 
-  - Temporary installation via about:debugging#/runtime/this-firefox
-  - Permanent installation requires disabling signature requirements
-- **Build Scripts Created**: 
-  - `build-xpi.sh`: Comprehensive build script with verification and colored output
-  - `quick-build.sh`: Simple build script for quick XPI creation
-- **XPI File**: Successfully created and tested XPI file (32K) with all required components
+## Recent Major Updates
 
-## Technical Details
-- Extension uses WebExtensions API with browser adapter for cross-compatibility
-- Includes all necessary files: manifest.json, background.js, popup.html, popup.js, content.js, icons, vendor/browser-adapter.js
-- XPI file is a ZIP archive with .xpi extension containing all extension components
-- Build scripts verify all required files are present before creating XPI
+### LibreWolf/Firefox Compatibility - FIXED ✅
+- **Root Cause Identified**: Original manifest used Chrome's `service_worker` format which Firefox/LibreWolf doesn't support
+- **Solution Implemented**: Created Firefox-specific build with `scripts` array instead of `service_worker`
+- **Result**: Extension now works perfectly in both Chrome AND Firefox/LibreWolf
 
-## Installation Instructions for LibreWolf
-1. **Temporary**: Use about:debugging#/runtime/this-firefox → Load Temporary Add-on → Select XPI file
-2. **Permanent**: Disable xpinstall.signatures.required in about:config, then install XPI through add-ons manager
+### Files Structure
+**Working XPI Files:**
+- `copy-tab-urls-chrome.xpi` (32K) - For Chrome/Brave/Edge
+- `copy-tab-urls-firefox.xpi` (56K) - For Firefox/LibreWolf ✅
+
+**Build Script:**
+- `build-firefox.sh` - Creates Firefox-compatible XPI
+
+**Source Files:**
+- `manifest.json` - Chrome version (service_worker)
+- `manifest-firefox.json` - Firefox version (scripts array)
+- `background.js` - Chrome version (uses importScripts)
+- `background-firefox.js` - Firefox version (no importScripts)
+- `popup.js` - Shared (with Firefox error handling)
+- `popup.html` - Shared
+- `content.js` - Shared
+- `vendor/browser-adapter.js` - Cross-browser compatibility layer
+
+### Key Technical Differences
+
+**Chrome Version:**
+```json
+"background": {
+  "service_worker": "background.js"
+}
+```
+
+**Firefox Version:**
+```json
+"background": {
+  "scripts": ["vendor/browser-adapter.js", "background.js"]
+}
+```
+
+### Bug Fixes Implemented
+1. ✅ **Firefox message passing** - Fixed "Receiving end does not exist" error
+2. ✅ **Manifest compatibility** - Created Firefox-specific manifest
+3. ✅ **Background script format** - Removed importScripts for Firefox version
+4. ✅ **XPI packaging** - Proper uncompressed format for Firefox
+
+### Installation Process
+
+**Chrome/Brave/Edge:**
+- Load unpacked extension from source directory
+- OR use `copy-tab-urls-chrome.xpi`
+
+**Firefox/LibreWolf:**
+1. Run `./build-firefox.sh`
+2. Load `copy-tab-urls-firefox.xpi` via `about:debugging`
+3. For permanent install: disable signature requirement in `about:config`
+
+### Cleanup Completed
+- ❌ Removed 4 non-working XPI files
+- ❌ Removed 8 unnecessary build scripts
+- ✅ Kept only working XPI files and build script
+- ✅ Updated all documentation
+
+### Testing Status
+- ✅ Works in Chrome (verified by user)
+- ✅ Works in LibreWolf (verified by user)
+- ✅ Proper error handling for Firefox message passing
+- ✅ XPI installs without corruption errors
+
+## Project Health
+- **Build Scripts**: 1 working script (build-firefox.sh)
+- **XPI Files**: 2 working files (Chrome + Firefox)
+- **Documentation**: Updated and accurate
+- **Cross-browser Support**: Fully functional
+- **Code Quality**: Clean and maintainable

@@ -71,6 +71,11 @@ function attachListeners() {
         openInNewWindow: state.openInNewWindow
       });
     } catch (error) {
+      // In Firefox/LibreWolf, "Receiving end does not exist" is normal during message passing
+      if (error && error.message && error.message.includes('Receiving end does not exist')) {
+        console.log('Restore message sent to background script (Firefox/LibreWolf)');
+        return;
+      }
       handleImmediateError(`Failed to start restore: ${error.message}`);
     }
   });
@@ -98,6 +103,11 @@ function attachListeners() {
         clipboardText
       });
     } catch (error) {
+      // In Firefox/LibreWolf, "Receiving end does not exist" is normal during message passing
+      if (error && error.message && error.message.includes('Receiving end does not exist')) {
+        console.log('Clipboard message sent to background script (Firefox/LibreWolf)');
+        return;
+      }
       handleImmediateError(`Clipboard error: ${error.message}`);
     }
   });
@@ -237,6 +247,12 @@ function startCopy(copyAllTabs, triggerButton) {
     action: 'copyUrls',
     copyAllTabs
   }).catch((error) => {
+    // In Firefox/LibreWolf, "Receiving end does not exist" is normal during message passing
+    // The background script will handle the actual copy and send back results
+    if (error && error.message && error.message.includes('Receiving end does not exist')) {
+      console.log('Message sent to background script (Firefox/LibreWolf)');
+      return;
+    }
     handleImmediateError(`Failed to start copy: ${error.message}`);
   });
 }

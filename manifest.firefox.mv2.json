@@ -1,21 +1,18 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Copy Tab URLs",
   "short_name": "Copy URLs",
-  "version": "1.51",
+  "version": "1.50",
   "description": "Copy, restore, and reopen tab URLs across Chrome, Brave, and Firefox.",
   "author": "Copy Tab URLs Maintainers",
   "homepage_url": "https://github.com/draeician/copy-tab-urls-chrome",
-  "permissions": [
-    "tabs",
-    "storage",
-    "clipboardWrite",
-    "clipboardRead"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
-  "action": {
+  "permissions": ["tabs", "storage", "clipboardWrite", "clipboardRead"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
     "default_title": "Copy Tab URLs",
     "default_popup": "popup.html",
     "default_icon": {
@@ -23,9 +20,6 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
   },
   "icons": {
     "16": "icons/icon16.png",
@@ -39,3 +33,4 @@
     }
   }
 }
+
