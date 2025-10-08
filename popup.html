@@ -7,10 +7,13 @@
     :root {
       color-scheme: light dark;
     }
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       width: 320px;
-      padding: 12px;
+      padding: 16px;
       margin: 0;
       background-color: var(--popup-background, #ffffff);
       color: var(--popup-text, #1a1a1a);
@@ -18,41 +21,76 @@
     h1 {
       margin: 0 0 12px;
       font-size: 18px;
+      text-align: center;
     }
-    .controls {
+    .section {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 8px;
+      margin-bottom: 16px;
     }
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .button-group.single {
+      grid-template-columns: 1fr;
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
     button {
-      width: 100%;
-      padding: 8px 12px;
-      margin-top: 6px;
+      padding: 10px 12px;
       font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      border: 1px solid #888;
-      border-radius: 4px;
-      background-color: #f3f3f3;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      background: var(--button-surface, #f5f5f5);
+      color: inherit;
+      transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     button.primary {
-      background-color: #1976d2;
-      border-color: #1976d2;
+      background-color: #1a73e8;
+      border-color: #1a73e8;
       color: #ffffff;
+    }
+    button:focus-visible {
+      outline: 2px solid #1a73e8;
+      outline-offset: 2px;
     }
     button:disabled {
       opacity: 0.6;
       cursor: default;
+      box-shadow: none;
+    }
+    .toggle {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .toggle span.label {
+      font-weight: 600;
+    }
+    .toggle span.hint {
+      display: block;
+      color: rgba(26, 26, 26, 0.75);
+      font-weight: 400;
     }
     #message {
       margin-top: 12px;
-      font-weight: bold;
+      font-weight: 600;
       min-height: 20px;
     }
     #message.error {
@@ -61,7 +99,7 @@
     #stats {
       margin-top: 8px;
       font-size: 12px;
-      line-height: 1.4;
+      line-height: 1.5;
     }
     #stats p {
       margin: 2px 0;
@@ -70,19 +108,30 @@
 </head>
 <body>
   <h1>Copy Tab URLs</h1>
-  <div class="controls">
-    <label class="checkbox">
-      <input type="checkbox" id="allTabsToggle">
-      <span>Copy from all windows</span>
-    </label>
-    <label class="checkbox">
+  <section class="section" aria-labelledby="copy-section-heading">
+    <h2 id="copy-section-heading" class="visually-hidden">Copy actions</h2>
+    <div class="button-group">
+      <button id="copyCurrentButton" class="primary" data-default-text="Copy Current Window">Copy Current Window</button>
+      <button id="copyAllButton" class="primary" data-default-text="Copy All Windows">Copy All Windows</button>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="session-section-heading">
+    <h2 id="session-section-heading" class="visually-hidden">Session actions</h2>
+    <div class="button-group single">
+      <button id="restoreButton" data-default-text="Restore Last Saved">Restore Last Saved</button>
+      <button id="clipboardButton" data-default-text="Open URLs from Clipboard">Open URLs from Clipboard</button>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="preferences-heading">
+    <h2 id="preferences-heading" class="visually-hidden">Preferences</h2>
+    <label class="toggle" for="openInNewWindowToggle">
       <input type="checkbox" id="openInNewWindowToggle" checked>
-      <span>Open in new window</span>
+      <span>
+        <span class="label">Open in a new window</span>
+        <span class="hint">Applies to restore and clipboard actions.</span>
+      </span>
     </label>
-  </div>
-  <button id="copyButton" class="primary">Copy URLs to Clipboard</button>
-  <button id="restoreButton">Restore Last Saved (new window)</button>
-  <button id="clipboardButton">Open URLs from Clipboard (this window)</button>
+  </section>
   <div id="message" role="status" aria-live="polite"></div>
   <div id="stats" aria-live="polite"></div>
   <script src="vendor/browser-adapter.js"></script>

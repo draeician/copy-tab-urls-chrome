@@ -4,13 +4,11 @@ if (typeof browser === 'undefined') {
 
 const browserApi = browser;
 
-const COPY_BUTTON_DEFAULT = 'Copy URLs to Clipboard';
 const COPY_BUTTON_WORKING = 'Copying…';
 const RESTORE_PREP_MESSAGE = 'Preparing to restore…';
 const CLIPBOARD_PREP_MESSAGE = 'Reading clipboard…';
 
 const state = {
-  copyAllTabs: true,
   openInNewWindow: true,
   busyAction: null
 };
@@ -25,10 +23,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function cacheElements() {
-  elements.copyButton = document.getElementById('copyButton');
+  elements.copyCurrentButton = document.getElementById('copyCurrentButton');
+  elements.copyAllButton = document.getElementById('copyAllButton');
   elements.restoreButton = document.getElementById('restoreButton');
   elements.clipboardButton = document.getElementById('clipboardButton');
-  elements.allTabsToggle = document.getElementById('allTabsToggle');
   elements.openInNewWindowToggle = document.getElementById('openInNewWindowToggle');
   elements.message = document.getElementById('message');
   elements.stats = document.getElementById('stats');
@@ -36,15 +34,6 @@ function cacheElements() {
 
 function attachListeners() {
   browserApi.runtime.onMessage.addListener(handleRuntimeMessage);
-
-  elements.allTabsToggle.addEventListener('change', async (event) => {
-    state.copyAllTabs = event.target.checked;
-    try {
-      await browserApi.storage.sync.set({ copyAllTabs: state.copyAllTabs });
-    } catch (error) {
-      console.error('Failed to persist copyAllTabs setting', error);
-    }
-  });
 
   elements.openInNewWindowToggle.addEventListener('change', async (event) => {
     state.openInNewWindow = event.target.checked;
@@ -56,24 +45,8 @@ function attachListeners() {
     }
   });
 
-  elements.copyButton.addEventListener('click', async () => {
-    if (state.busyAction) {
-      return;
-    }
-
-    setBusyState('copy');
-    setMessage('Initializing…');
-    clearStats();
-
-    try {
-      await browserApi.runtime.sendMessage({
-        action: 'copyUrls',
-        copyAllTabs: state.copyAllTabs
-      });
-    } catch (error) {
-      handleImmediateError(`Failed to start copy: ${error.message}`);
-    }
-  });
+  elements.copyCurrentButton.addEventListener('click', () => startCopy(false, elements.copyCurrentButton));
+  elements.copyAllButton.addEventListener('click', () => startCopy(true, elements.copyAllButton));
 
   elements.restoreButton.addEventListener('click', async () => {
     if (state.busyAction) {
@@ -121,22 +94,16 @@ function attachListeners() {
 
 async function loadSettings() {
   try {
-    const data = await browserApi.storage.sync.get({ copyAllTabs: true, openInNewWindow: true });
-    state.copyAllTabs = data.copyAllTabs !== false;
+    const data = await browserApi.storage.sync.get({ openInNewWindow: true });
     state.openInNewWindow = data.openInNewWindow !== false;
   } catch (error) {
     console.error('Failed to load settings', error);
-    state.copyAllTabs = true;
     state.openInNewWindow = true;
   }
-
-  elements.allTabsToggle.checked = state.copyAllTabs;
   elements.openInNewWindowToggle.checked = state.openInNewWindow;
 }
 
 function updateButtonLabels() {
-  elements.restoreButton.textContent = 'Restore Last Saved (new window)';
-  elements.clipboardButton.textContent = 'Open URLs from Clipboard (this window)';
   const targetDescription = state.openInNewWindow ? 'new window' : 'current window';
   elements.restoreButton.title = `Open saved URLs in a ${targetDescription}.`;
   elements.clipboardButton.title = `Open clipboard URLs in a ${targetDescription}.`;
@@ -235,18 +202,41 @@ function renderOperationStats(stats) {
   elements.stats.innerHTML = parts.join('');
 }
 
-function setBusyState(action) {
+function startCopy(copyAllTabs, triggerButton) {
+  if (state.busyAction) {
+    return;
+  }
+
+  setBusyState('copy', triggerButton);
+  setMessage('Initializing…');
+  clearStats();
+
+  browserApi.runtime.sendMessage({
+    action: 'copyUrls',
+    copyAllTabs
+  }).catch((error) => {
+    handleImmediateError(`Failed to start copy: ${error.message}`);
+  });
+}
+
+function setBusyState(action, activeCopyButton = null) {
   state.busyAction = action;
 
   const busy = Boolean(action);
-  elements.copyButton.disabled = busy;
+  elements.copyCurrentButton.disabled = busy;
+  elements.copyAllButton.disabled = busy;
   elements.restoreButton.disabled = busy;
   elements.clipboardButton.disabled = busy;
 
-  if (action === 'copy') {
-    elements.copyButton.textContent = COPY_BUTTON_WORKING;
-  } else {
-    elements.copyButton.textContent = COPY_BUTTON_DEFAULT;
+  if (elements.copyCurrentButton && elements.copyCurrentButton.dataset && elements.copyCurrentButton.dataset.defaultText) {
+    elements.copyCurrentButton.textContent = elements.copyCurrentButton.dataset.defaultText;
+  }
+  if (elements.copyAllButton && elements.copyAllButton.dataset && elements.copyAllButton.dataset.defaultText) {
+    elements.copyAllButton.textContent = elements.copyAllButton.dataset.defaultText;
+  }
+
+  if (action === 'copy' && activeCopyButton) {
+    activeCopyButton.textContent = COPY_BUTTON_WORKING;
   }
 }
 

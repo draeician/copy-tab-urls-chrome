@@ -10,7 +10,7 @@
 - [x] Implement clipboard import handling with newline and JSON parsing plus internal URL filtering (invalid lines ignored gracefully). [#P2-T3]
 
 ## Phase 3 – Popup experience
-- [ ] Redesign the popup UI with new buttons, open-in-new-window toggle, and status messaging (UI matches spec and remains accessible). [#P3-T1]
+- [x] Redesign the popup UI with new buttons, open-in-new-window toggle, and status messaging (UI matches spec and remains accessible). [#P3-T1]
 - [ ] Wire popup logic to new background actions, including settings persistence and clipboard interactions (all buttons trigger expected behavior). [#P3-T2]
 
 ## Phase 4 – Quality & resilience
