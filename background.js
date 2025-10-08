@@ -1,13 +1,17 @@
 importScripts('vendor/browser-adapter.js');
 
-if (typeof browser === 'undefined') {
+const browserApi = (typeof browserAdapter !== 'undefined' && browserAdapter && typeof browserAdapter.getBrowser === 'function')
+  ? browserAdapter.getBrowser()
+  : (typeof browser !== 'undefined' ? browser : undefined);
+
+if (!browserApi) {
   throw new Error('Browser adapter failed to initialize in background context.');
 }
 
-const runtime = browser.runtime;
-const storage = browser.storage;
-const tabsApi = browser.tabs;
-const windowsApi = browser.windows;
+const runtime = browserApi.runtime;
+const storage = browserApi.storage;
+const tabsApi = browserApi.tabs;
+const windowsApi = browserApi.windows;
 
 const INTERNAL_PROTOCOLS = new Set(['chrome:', 'chrome-extension:', 'moz-extension:', 'about:', 'edge:', 'view-source:']);
 

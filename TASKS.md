@@ -5,7 +5,7 @@
 - [x] Update Manifest V3 metadata, permissions, and Firefox-specific settings (manifest validates in Chrome & Firefox). [#P1-T2]
 
 ## Phase 2 – Background capabilities
-- [ ] Refactor the background service worker to use the shared adapter and maintain existing copy/status flow (copy action mirrors current UX). [#P2-T1]
+- [x] Refactor the background service worker to use the shared adapter and maintain existing copy/status flow (copy action mirrors current UX). [#P2-T1]
 - [ ] Persist the last copied session in `storage.local` and implement restore helpers for current/new windows (restore reopens saved URLs). [#P2-T2]
 - [ ] Implement clipboard import handling with newline and JSON parsing plus internal URL filtering (invalid lines ignored gracefully). [#P2-T3]
 
