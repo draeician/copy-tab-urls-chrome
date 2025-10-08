@@ -3,10 +3,29 @@
     return;
   }
 
+  const registerAdapter = (browserApi) => {
+    if (!browserApi) {
+      return;
+    }
+
+    const adapter = {
+      getBrowser() {
+        return browserApi;
+      }
+    };
+
+    if (typeof global.browserAdapter === 'undefined' || !global.browserAdapter) {
+      global.browserAdapter = adapter;
+    } else if (typeof global.browserAdapter.getBrowser !== 'function') {
+      global.browserAdapter.getBrowser = adapter.getBrowser;
+    }
+  };
+
   if (typeof global.browser !== 'undefined' && global.browser) {
     if (!global.browser.action && global.chrome && global.chrome.action) {
       global.browser.action = global.chrome.action;
     }
+    registerAdapter(global.browser);
     return;
   }
 
@@ -92,4 +111,5 @@
   }
 
   global.browser = browserShim;
+  registerAdapter(browserShim);
 })(typeof globalThis !== 'undefined' ? globalThis : (typeof self !== 'undefined' ? self : this));
