@@ -29,3 +29,8 @@ def test_popup_reads_and_writes_clipboard() -> None:
     source = load_popup_js()
     assert "navigator.clipboard.readText" in source
     assert "navigator.clipboard.writeText" in source
+
+
+def test_popup_reports_blocked_internal_urls() -> None:
+    source = load_popup_js()
+    assert "Blocked internal URLs" in source
