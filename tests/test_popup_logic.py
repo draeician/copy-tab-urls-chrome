@@ -34,3 +34,9 @@ def test_popup_reads_and_writes_clipboard() -> None:
 def test_popup_reports_blocked_internal_urls() -> None:
     source = load_popup_js()
     assert "Blocked internal URLs" in source
+
+
+def test_popup_initialization_handles_async_errors() -> None:
+    source = load_popup_js()
+    assert "initializePopup().catch" in source
+    assert "Failed to initialize popup" in source

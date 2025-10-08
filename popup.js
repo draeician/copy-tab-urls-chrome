@@ -17,12 +17,18 @@ const state = {
 
 const elements = {};
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  initializePopup().catch((error) => {
+    console.error('Failed to initialize popup', error);
+  });
+});
+
+async function initializePopup() {
   cacheElements();
   attachListeners();
   await loadSettings();
   updateButtonLabels();
-});
+}
 
 function cacheElements() {
   elements.copyCurrentButton = document.getElementById('copyCurrentButton');
