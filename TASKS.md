@@ -7,7 +7,7 @@
 ## Phase 2 – Background capabilities
 - [x] Refactor the background service worker to use the shared adapter and maintain existing copy/status flow (copy action mirrors current UX). [#P2-T1]
 - [x] Persist the last copied session in `storage.local` and implement restore helpers for current/new windows (restore reopens saved URLs). [#P2-T2]
-- [ ] Implement clipboard import handling with newline and JSON parsing plus internal URL filtering (invalid lines ignored gracefully). [#P2-T3]
+- [x] Implement clipboard import handling with newline and JSON parsing plus internal URL filtering (invalid lines ignored gracefully). [#P2-T3]
 
 ## Phase 3 – Popup experience
 - [ ] Redesign the popup UI with new buttons, open-in-new-window toggle, and status messaging (UI matches spec and remains accessible). [#P3-T1]
