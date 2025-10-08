@@ -18,5 +18,5 @@
 - [x] Verify async flows resolve cleanly with no unhandled promise rejections (console remains clear during manual testing). [#P4-T2]
 
 ## Phase 5 – Documentation & release
-- [ ] Update README with multi-browser setup, feature overview, and QA checklist (docs reflect new workflow). [#P5-T1]
+- [x] Update README with multi-browser setup, feature overview, and QA checklist (docs reflect new workflow). [#P5-T1]
 - [ ] Record the 1.50 release in CHANGELOG and confirm version bump (changelog and manifest show 1.50). [#P5-T2]

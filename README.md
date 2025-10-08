@@ -6,19 +6,20 @@ Copy Tab URLs is a lightweight, offline-ready WebExtensions add-on that helps yo
 
 ## Features
 
-- Copy the URLs from the current window or every open browser window.
-- Automatically filters out internal pages such as `chrome://` and `about:`.
-- Displays real-time status updates and copy statistics in the popup.
-- Saves the most recent copy session so you can restore those tabs later.
-- Opens URL lists from your clipboard (newline-separated or JSON array/object).
-- Remembers your preferences with `storage.sync` and keeps the last session in `storage.local`.
-- Requires no network access and works completely offline.
+- Copy the URLs from the current window or every open browser window with one click.
+- Toggle whether restored sessions open in the current window or a brand-new window.
+- Automatically filter out internal pages such as `chrome://` and `about:` URLs.
+- Display real-time status updates, copy statistics, and last saved timestamps in the popup.
+- Save the most recent copy session and restore it later on demand.
+- Open URL lists from your clipboard whether they are newline-separated text, JSON arrays, or objects with a `urls` field.
+- Persist your preferences across browsers with `storage.sync` and keep the last session safe in `storage.local`.
+- Work completely offline with no external network access.
 
 ## Installation
 
-### Chrome / Brave (Chromium)
+### Chrome / Brave / Edge (Chromium)
 1. Clone or download this repository to your machine.
-2. Open `chrome://extensions/` (or `brave://extensions/`).
+2. Open the extensions page (`chrome://extensions/`, `brave://extensions/`, or `edge://extensions/`).
 3. Enable **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and select the project directory.
 
@@ -26,7 +27,7 @@ Copy Tab URLs is a lightweight, offline-ready WebExtensions add-on that helps yo
 1. Clone or download this repository to your machine.
 2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and choose the `manifest.json` file in the project directory.
-4. To install a signed package, run your preferred build/signing process and load the resulting `.xpi` through the same page.
+4. When you are ready to ship, build and sign an `.xpi` using your preferred tooling and install it through the same page.
 
 ## Usage
 
@@ -43,14 +44,14 @@ Copy Tab URLs is a lightweight, offline-ready WebExtensions add-on that helps yo
 
 ## QA Checklist
 
-Perform these manual checks on Linux and Windows using Brave, Chrome, and Firefox:
+Verify the extension on Linux and Windows with Chrome, Brave, Edge, and Firefox:
 
-- Copy URLs from the current window and all windows.
-- Confirm the clipboard text is updated after copying.
-- Restore the last saved session in both the current window and a new window.
-- Open URLs from the clipboard using newline-separated text.
-- Open URLs from the clipboard using a JSON array or `{ urls: [] }` object.
-- Verify internal URLs such as `chrome://` and `about:` are excluded.
+- Copy URLs from both the current window and all windows and confirm the clipboard contents update.
+- Toggle the **Open in New Window** preference, copy again, and restore the session in each mode.
+- Import URLs from the clipboard using newline-separated text, JSON arrays, and `{ "urls": [] }` objects.
+- Confirm internal/privileged URLs such as `chrome://`, `edge://`, and `about:` are filtered out.
+- Trigger copy/restore actions with the popup closed to ensure background notifications and status text remain accurate.
+- Refresh the browser and reopen the popup to confirm settings persist via `storage.sync` and the last session reloads from `storage.local`.
 
 ## License
 
