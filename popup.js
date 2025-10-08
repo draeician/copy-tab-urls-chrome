@@ -1,8 +1,10 @@
-if (typeof browser === 'undefined') {
+const browserApi = (typeof browserAdapter !== 'undefined' && browserAdapter && typeof browserAdapter.getBrowser === 'function')
+  ? browserAdapter.getBrowser()
+  : (typeof browser !== 'undefined' ? browser : undefined);
+
+if (!browserApi) {
   throw new Error('Browser adapter failed to initialize in popup context.');
 }
-
-const browserApi = browser;
 
 const COPY_BUTTON_WORKING = 'Copying…';
 const RESTORE_PREP_MESSAGE = 'Preparing to restore…';
@@ -77,6 +79,9 @@ function attachListeners() {
     clearStats();
 
     try {
+      if (!navigator.clipboard || typeof navigator.clipboard.readText !== 'function') {
+        throw new Error('Clipboard read is not available.');
+      }
       const clipboardText = await navigator.clipboard.readText();
       if (!clipboardText.trim()) {
         throw new Error('Clipboard is empty.');
@@ -139,6 +144,11 @@ function handleRuntimeMessage(request) {
 function handleCopyComplete(payload) {
   const text = payload && payload.text ? payload.text : '';
   const stats = payload && payload.stats ? payload.stats : {};
+
+  if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+    handleCopyError('Clipboard write is not available.');
+    return;
+  }
 
   navigator.clipboard.writeText(text).then(() => {
     setMessage(`${stats.urlCount || 0} URL${stats.urlCount === 1 ? '' : 's'} copied to clipboard!`);

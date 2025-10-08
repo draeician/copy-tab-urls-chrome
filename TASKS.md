@@ -11,7 +11,7 @@
 
 ## Phase 3 – Popup experience
 - [x] Redesign the popup UI with new buttons, open-in-new-window toggle, and status messaging (UI matches spec and remains accessible). [#P3-T1]
-- [ ] Wire popup logic to new background actions, including settings persistence and clipboard interactions (all buttons trigger expected behavior). [#P3-T2]
+- [x] Wire popup logic to new background actions, including settings persistence and clipboard interactions (all buttons trigger expected behavior). [#P3-T2]
 
 ## Phase 4 – Quality & resilience
 - [ ] Add comprehensive error handling for empty results, clipboard failures, and blocked schemes (errors reported without crashes). [#P4-T1]
