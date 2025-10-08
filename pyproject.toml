@@ -3,9 +3,9 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "discripper"
-version = "0.0.0"
-description = "Internal tooling package for repository gates."
+name = "copy-tab-urls-chrome"
+version = "1.50"
+description = "Chrome extension for copying, restoring, and reopening tab URLs."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Copy Tab URLs Maintainers"}]

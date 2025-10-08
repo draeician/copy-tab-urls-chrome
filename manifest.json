@@ -5,7 +5,7 @@
   "version": "1.50",
   "description": "Copy, restore, and reopen tab URLs across Chrome, Brave, and Firefox.",
   "author": "Copy Tab URLs Maintainers",
-  "homepage_url": "https://github.com/discripper/copy-tab-urls",
+  "homepage_url": "https://github.com/draeician/copy-tab-urls-chrome",
   "permissions": [
     "tabs",
     "storage",
@@ -34,7 +34,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "copy-tab-urls@discripper.dev",
+      "id": "copy-tab-urls@draeician.dev",
       "strict_min_version": "109.0"
     }
   }

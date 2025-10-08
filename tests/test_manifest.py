@@ -30,7 +30,7 @@ def test_manifest_metadata_is_populated(manifest: dict[str, object]) -> None:
     assert manifest["name"] == "Copy Tab URLs"
     assert manifest["short_name"] == "Copy URLs"
     assert manifest["author"] == "Copy Tab URLs Maintainers"
-    assert manifest["homepage_url"] == "https://github.com/discripper/copy-tab-urls"
+    assert manifest["homepage_url"] == "https://github.com/draeician/copy-tab-urls-chrome"
 
     action = manifest["action"]
     assert action["default_title"] == "Copy Tab URLs"
@@ -50,5 +50,5 @@ def test_manifest_includes_firefox_metadata(manifest: dict[str, object]) -> None
     browser_specific_settings = manifest["browser_specific_settings"]
     gecko_settings = browser_specific_settings["gecko"]
 
-    assert gecko_settings["id"] == "copy-tab-urls@discripper.dev"
+    assert gecko_settings["id"] == "copy-tab-urls@draeician.dev"
     assert gecko_settings["strict_min_version"] == "109.0"
